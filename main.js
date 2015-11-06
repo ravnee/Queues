@@ -12,14 +12,14 @@ var client = redis.createClient(6379, '127.0.0.1', {})
 app.use(function(req, res, next) 
 {
 	console.log(req.method, req.url);
-	console.log("I printed this "+req.originalUrl);
+	//console.log("I printed this "+req.originalUrl);
 	req.getUrl = function() {
       return req.protocol + "://" + req.get('host') + req.originalUrl;
     }
     var recUrl = req.protocol + "://" + req.get('host') + req.originalUrl;
     console.log(req.protocol + "://" + req.get('host') + req.originalUrl);       
     client.lpush(['recentUrls', recUrl], function(err, reply) {
-      console.log("added "+reply); //prints 2
+      //console.log("added "+reply); //prints 2
 	});
 	client.ltrim("recentUrls", 0, 4);
 	// ... INSERT HERE.
@@ -28,27 +28,31 @@ app.use(function(req, res, next)
 });
 
 app.get('/', function(req, res) {
+  console.log("listening at port 3000");
   res.send('hello world')
 })
 
 app.get('/get', function(req, res) {
   client.get("key", function(err,value){ 
-  	console.log(value);
+    console.log("listening at port 3000");
+  	//console.log(value);
   	res.send(value);
   });
 })
 
 app.get('/set', function(req, res) {
-	console.log("inside");
+	//console.log("inside");
+  console.log("listening at port 3000");
   client.set("key", "this message will self-destruct in 10 seconds");
   client.expire("key",10);
   res.send("key added successfully");
 })
 
 app.get('/recent', function(req, res) {
-  console.log("checking if I am getting the recent Urls");
+  //console.log("checking if I am getting the recent Urls");
+  console.log("listening at port 3000");
   client.lrange('recentUrls', 0, -1, function(err, reply) {
-    console.log("This is my list ");
+    //console.log("This is my list ");
     console.log(reply); 
     res.send(reply);
   });
@@ -56,9 +60,9 @@ app.get('/recent', function(req, res) {
 
 
 app.post('/upload',[ multer({ dest: './uploads/'}), function(req, res){
-   console.log(req.body) // form fields
-   console.log(req.files) // form files
-
+   //console.log(req.body) // form fields
+   //console.log(req.files) // form files
+   console.log("listening at port 3000");
    if( req.files.image )
    {
 	   fs.readFile( req.files.image.path, function (err, data) {
@@ -73,7 +77,7 @@ app.post('/upload',[ multer({ dest: './uploads/'}), function(req, res){
 }]);
 
 app.get('/meow', function(req, res) {
-	
+	console.log("listening at port 3000");
 	client.lpop('images',function(err,imagedata){
 		if (err) throw err
 		res.writeHead(200, {'content-type':'text/html'});
