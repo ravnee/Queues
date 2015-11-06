@@ -10,6 +10,9 @@ Setup
 5. Run nodejs main.js
 6. Access the webserver from browser at port 3000
 
+Link to ScreenCast:
+https://github.com/ravnee/Queues/blob/master/screencast.mp4
+
 ## Server setup in main.js
 
 ```
