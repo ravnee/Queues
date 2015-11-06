@@ -4,10 +4,11 @@ Cache, Proxies, Queues
 Setup
 
 1. Cloned the Queues repository
-2. Installed Redis
+2. Install Redis
 3. Run redis server
 4. Run npm install in the Queues folder
 5. Run nodejs main.js
+6. Access the webserver from browser at port 3000
 
 ## Server setup in main.js
 
@@ -93,9 +94,10 @@ app.get('/meow', function(req, res) {
 
 ## Proxy setup
 
-1. For this task, I have created one more instance of server running at port 3001, other than the main.js running at 3000.
-2. In proxy server, I have added the avaiable servers in a list.
-3. Using redis rpoplpush, I am taking the alternate avaiable servers and sending the requests to that.
+1. For this task, I have created one more instance of server running at port 3001 (newServer.js), other than the main.js running at 3000.
+2. In proxy server, I have added the avaiable servers in a list called servers.
+3. Using redis rpoplpush, moved the servers in the list.
+4. It gives me alternate avaiable servers and then I am sending requests to that.
 
 ###
 Code block to add servers to the queue 'servers'. I have checked that if the queue already contains servers, then don't add them again.
